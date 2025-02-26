@@ -1,0 +1,29 @@
+{
+  "name": "",
+  "dockerFile": "Dockerfile",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-typescript-next",
+        "svelte.svelte-vscode",
+        "ms-azuretools.vscode-docker",
+        "bradlc.vscode-tailwindcss",
+        "YoavBls.pretty-ts-errors"
+      ]
+    }
+  },
+  "postStartCommand": [
+    "bash -c 'git config --global user.name \"${GIT_USER_NAME}\"'",
+    "bash -c 'git config --global user.email \"${GIT_USER_EMAIL}\"'",
+    "bash -c 'pnpm install'"
+  ],
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,readonly"
+  ],
+  "containerEnv": {
+    "NPM_TOKEN": "${localEnv:REPLRN_NPM_TOKEN|README_SEE_MORE_NPM_TOKEN|PBUDDY_NPM_TOKEN}", 
+    "HOST_WORKSPACE_PATH": "${localWorkspaceFolder}",
+    "GIT_USER_NAME": "${localEnv:GIT_USER_NAME}",
+    "GIT_USER_EMAIL": "${localEnv:GIT_USER_EMAIL}"
+  }
+}

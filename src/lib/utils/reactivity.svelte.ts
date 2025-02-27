@@ -1,13 +1,4 @@
-import type { DockviewPanel } from "dockview-core";
-import { untrack } from "svelte";
-import type { AddedPanelByView, RawViewAPI, ViewAPI } from "./index.js";
-
-export function explicitEffect(fn: () => void, depsFn: () => any) {
-  $effect(() => {
-    depsFn();
-    untrack(fn);
-  });
-}
+import type { AddedPanelByView } from "./index.js";
 
 export default class ReactivePanelUpdater<T> {
   #value?: T;

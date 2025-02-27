@@ -2,9 +2,8 @@ import DockView from "./DockView.svelte";
 import PaneView from "./PaneView.svelte";
 import SplitView from "./SplitView.svelte";
 import GridView from "./GridView.svelte";
-import type { IDockviewPanelProps, } from "dockview-core";
-import type { IPaneviewPanelProps, ISplitviewPanelProps } from "dockview";
-import type { IGridviewPanelProps } from "dockview";
+import type { IDockviewHeaderActionsProps, IDockviewPanelHeaderProps, IDockviewPanelProps, IWatermarkPanelProps, } from "dockview-core";
+import type { IPaneviewPanelProps, ISplitviewPanelProps, IGridviewPanelProps } from "dockview";
 import type {
   ViewKey,
   ComponentsConstraint,
@@ -29,6 +28,12 @@ export type PanelProps<T extends ViewKey, Options extends Record<string, any>> =
   pane: IPaneviewPanelProps<Options>;
   split: ISplitviewPanelProps<Options>;
 }[T];
+
+export type AuxiliaryDockPanelProps = {
+  watermark: IWatermarkPanelProps;
+  tab: IDockviewPanelHeaderProps;
+  headerAction: IDockviewHeaderActionsProps;
+}
 
 export type ViewProps<
   ViewType extends ViewKey,

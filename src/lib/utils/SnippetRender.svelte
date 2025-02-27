@@ -21,7 +21,7 @@
   type Args = [Arg];
   type Fn = (...args: Args) => ReturnType<Snippet<Args>>;
 
-  let { snippet, ...params } = paramsWithSnippet;
+  let { snippet, ...params } = $derived(paramsWithSnippet);
 
   let arg = $derived({ params, api, containerApi, ...rest }) as Arg;
 </script>

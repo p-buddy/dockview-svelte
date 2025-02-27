@@ -84,6 +84,7 @@ export default class PanelRendererBase<Props extends RecordLike, InitOptions ext
   }
 
   update({ params }: PanelUpdateEvent): void {
+    // TODO: This is only efficient up to a depth of 1, can start recursing on params if `params[key]` is also an object
     for (const key in params)
       this.propsUpdater?.updateSingle(
         ...((this.propsHasParams

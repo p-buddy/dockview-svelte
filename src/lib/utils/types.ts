@@ -90,3 +90,7 @@ export type ValueAtPath<T, P extends any[]> =
 
 export type Mounted<Props extends Record<string, any> = any, Exports extends Record<string, any> = any> =
   ReturnType<typeof mount<Props, Exports>>;
+
+export type AsNonReadonly<T extends object> = {
+  -readonly [K in keyof T]: T[K];
+};

@@ -1,7 +1,20 @@
 import { expectTypeOf } from "vitest";
-import Legacy from "./test-harness/Legacy.svelte";
-import Runes from "./test-harness/Runes.svelte";
-import { type ComponentExports, type ComponentProps, type ModifiedProps } from "./utils.svelte";
+import { type ComponentExports, type ComponentProps, } from "./types.js";
+import { type ModifiedProps } from "./index.js";
+import Legacy from "./Legacy.test.svelte";
+import Runes from "./Runes.test.svelte";
+
+export type ExpectedComponentProps = {
+  stringProp: string;
+  numberProp: number;
+  optionalRecordProp?: Record<string, any>;
+};
+
+export type ExpectedComponentExports = {
+  exportedVariable: "hello";
+  exportedFunction: () => ExpectedComponentExports["exportedVariable"];
+}
+
 
 export const utilityTypes = () => {
   type LegacyProps = ComponentProps<typeof Legacy>;
@@ -28,6 +41,4 @@ export const utilityTypes = () => {
   expectTypeOf<LegacyExports>().toEqualTypeOf<ExpectedExports>();
 
   expectTypeOf<RunesExports>().toEqualTypeOf<ExpectedExports>();
-
-  type X = ModifiedProps<"dock", {}, {}, {}>;
 };

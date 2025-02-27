@@ -27,8 +27,9 @@ import type {
   ISplitviewPanelProps,
 } from "dockview";
 import SnippetRender from "./SnippetRender.svelte";
-import type { RecordLike, RequiredAndPartial, ComponentExports, ConstrainedComponent, OmitNever } from "./types.js";
+import type { RecordLike, RequiredAndPartial, ComponentExports, ConstrainedComponent, OmitNever, AsNonReadonly } from "./types.js";
 import PanelRendererBase from "./PanelRendererBase.js";
+import ReactivePanelUpdater, { explicitEffect } from "./reactivity.svelte.js";
 
 /**
  * The props for the React version of the different view components
@@ -188,6 +189,7 @@ type SpreadAddSnippetPanelOptions<
     /**/ | [null | undefined | {}, CustomizedAddPanelOptions<ViewType, Additional>]
     /**/ | [];
 
+export const signal = <T>(getter: () => T): T => new ReactivePanelUpdater(getter) as T;
 
 export type ExtendedGridAPI<
   ViewType extends ViewKey,
@@ -203,6 +205,8 @@ export type ExtendedGridAPI<
     name: string extends K ? never : K,
     ...params: SpreadAddSnippetPanelOptions<ViewType, K, Snippets, Additional>
   ) => Promise<{ panel: AddedPanelByView<ViewType>, reference: string }>;
+
+  signal: <T>(getter: () => T) => T;
 };
 
 export type RawViewAPIs = {
@@ -211,6 +215,8 @@ export type RawViewAPIs = {
   pane: PaneviewApi;
   split: SplitviewApi;
 }
+
+export type RawViewAPI<ViewType extends ViewKey = ViewKey> = RawViewAPIs[ViewType];
 
 export type ViewAPI<
   ViewType extends ViewKey,
@@ -298,20 +304,37 @@ export const createExtendedAPI = <
   const common = <TExports extends RecordLike = {}>(prefix: Prefix, name: string, ...args: CommonArgs) => {
     const withPrefix = prefix + name;
     const { length } = args;
-    const params = length >= 1 ? args[0] : {};
+    const params = length >= 1 ? args[0] ?? {} : {};
+
     const config = length === 2 ? args[1] : null;
     const id = length === 2 ? (config?.id ?? withPrefix) : withPrefix;
 
     const title = (config as any as PaneConfig)?.title ?? name;
 
     const promise = PanelRendererBase.Mount.await<TExports>({ viewIndex, id, name, panelTarget: type });
+
+    let reactives: [ReactivePanelUpdater<any>, string[]][] | undefined = undefined;
+
+    for (const key in params) {
+      // Todo: this should be recursive
+      const value = (params as Record<string, any>)[key];
+      if (!(value instanceof ReactivePanelUpdater)) continue;
+      reactives ??= [];
+      reactives.push([value, ["params", key]]);
+      (params as Record<string, any>)[key] = value.value;
+    }
+
     const panel = api.addPanel({
       ...(config ?? {}),
       id,
       title,
       component: withPrefix,
-      params: params ?? {},
+      params,
     }) as AddedPanelByView<ViewType>;
+
+    if (reactives)
+      for (const [reactive, path] of reactives)
+        reactive.attach(panel, path);
 
     return [promise, panel, id] as const;
   }
@@ -329,9 +352,12 @@ export const createExtendedAPI = <
     return { panel, reference };
   }
 
+  (api as DockviewApi).onDidRemovePanel(ReactivePanelUpdater.DettachFromAll);
+
   return {
     addComponentPanel,
     addSnippetPanel,
+    signal: signal
   } satisfies Target;
 }
 

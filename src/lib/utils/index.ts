@@ -29,7 +29,7 @@ import type {
 import SnippetRender from "./SnippetRender.svelte";
 import type { RecordLike, RequiredAndPartial, ComponentExports, ConstrainedComponent, OmitNever, AsNonReadonly } from "./types.js";
 import PanelRendererBase from "./PanelRendererBase.js";
-import ReactivePanelUpdater, { explicitEffect } from "./reactivity.svelte.js";
+import ReactivePanelUpdater from "./reactivity.svelte.js";
 
 /**
  * The props for the React version of the different view components

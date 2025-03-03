@@ -3,7 +3,7 @@
 	"version": "0.0.2",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && npm run prepack && cp ./node_modules/dockview/dist/styles/dockview.css ./dist/style.css",
+		"build": "vite build && npm run prepack",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"prepack": "svelte-kit sync && svelte-package && publint",

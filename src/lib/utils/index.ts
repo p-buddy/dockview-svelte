@@ -14,6 +14,7 @@ import type {
   IDockviewPanelHeaderProps,
   IWatermarkPanelProps,
   IDockviewHeaderActionsProps,
+  Orientation,
 } from "dockview-core";
 import { type Component, type Snippet } from "svelte";
 import type {
@@ -266,8 +267,10 @@ export type ModifiedProps<
   | (keyof CustomizedViewProps<ViewType, Components, Snippets, Additional>)
   | (ViewType extends "pane" ? "headerComponents" : never)
   | (ViewType extends "dock" ? OverridenDockviewReactPropNames : never)
+  | ("orientation" extends keyof RawViewProps<ViewType> ? "orientation" : never)
 > &
-  CustomizedViewProps<ViewType, Components, Snippets, Additional>;
+  CustomizedViewProps<ViewType, Components, Snippets, Additional>
+  & ("orientation" extends keyof RawViewProps<ViewType> ? { orientation: Orientation | "HORIZONTAL" | "VERTICAL" } : {});
 
 export type AdditionalPaneProps<Headers extends { components: ComponentsConstraint<"pane">, snippets: SnippetsConstraint<"pane"> }> = {
   headers?: Partial<Headers>;

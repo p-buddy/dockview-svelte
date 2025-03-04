@@ -70,6 +70,8 @@
     ...props
   }: ModifiedProps<"split", Components, Snippets> = $props();
 
+  console.log(props.orientation);
+
   const index = splitCount++;
 
   let splitView: ViewAPI<"split", Components, Snippets>;

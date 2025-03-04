@@ -83,8 +83,15 @@
   type Props = AdditionalPaneProps<Headers> &
     ModifiedProps<"pane", Components, Snippets, { headers: Headers }>;
 
-  let { components, snippets, headers, onReady, onDidDrop, ...props }: Props =
-    $props();
+  let {
+    components,
+    snippets,
+    headers,
+    onReady,
+    onDidDrop,
+    theme,
+    ...props
+  }: Props = $props();
 
   const index = paneCount++;
 
@@ -158,4 +165,4 @@
   });
 </script>
 
-<ViewContainer id={`pane${index}`} bind:element />
+<ViewContainer id={`pane${index}`} bind:element {theme} />

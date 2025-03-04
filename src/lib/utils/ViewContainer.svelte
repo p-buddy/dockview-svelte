@@ -15,7 +15,7 @@
     style:height="100%"
     style:width="100%"
     bind:this={element}
-    class={theme ? `dockview-theme-${theme}` : ""}
+    class={`dockview-theme-${theme ?? "dark"}`}
   ></div>
 </span>
 

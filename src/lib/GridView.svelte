@@ -73,6 +73,7 @@
   let {
     components,
     snippets,
+    theme,
     onReady,
     ...props
   }: ModifiedProps<"grid", Components, Snippets> = $props();
@@ -125,4 +126,4 @@
   });
 </script>
 
-<ViewContainer id={`grid${index}`} bind:element />
+<ViewContainer id={`grid${index}`} bind:element {theme} />

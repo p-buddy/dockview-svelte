@@ -103,6 +103,7 @@
     components,
     snippets,
     tabs,
+    theme,
     watermark,
     defaultTab,
     rightHeaderActions,
@@ -220,4 +221,4 @@
   });
 </script>
 
-<ViewContainer id={`dock${index}`} bind:element />
+<ViewContainer id={`dock${index}`} bind:element {theme} />

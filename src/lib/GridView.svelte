@@ -37,6 +37,7 @@
       const self = this;
       this.render = new PanelRendererBase({
         ...config,
+        element: this.element,
         panelTarget: "grid",
         initOptionsToProps: (options) =>
           ({
@@ -67,6 +68,7 @@
   "
 >
   import ViewContainer from "./utils/ViewContainer.svelte";
+  import { onDestroy } from "svelte";
 
   let {
     components,
@@ -116,6 +118,10 @@
     gridView.layout(clientWidth, clientHeight);
 
     onReady?.({ api: gridView });
+  });
+
+  onDestroy(() => {
+    gridView?.dispose();
   });
 </script>
 

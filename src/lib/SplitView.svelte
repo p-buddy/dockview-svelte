@@ -26,15 +26,16 @@
   class SvelteGridviewPanel<
     Props extends Record<string, any>,
   > extends SplitviewPanel {
-    private render: PanelRendererBase<Props, PanelViewInitParameters>;
+    private renderer: PanelRendererBase<Props, PanelViewInitParameters>;
 
     constructor(
       config: ConstructorConfigWithout<Props, PanelViewInitParameters>,
     ) {
       super(config.id, config.name);
       const self = this;
-      this.render = new PanelRendererBase({
+      this.renderer = new PanelRendererBase({
         ...config,
+        element: this.element,
         panelTarget: "split",
         initOptionsToProps: (options) =>
           ({
@@ -46,8 +47,8 @@
     }
 
     getComponent(): IFrameworkPart {
-      this.render.init(this._params as PanelViewInitParameters);
-      return this.render;
+      this.renderer.init(this._params as PanelViewInitParameters);
+      return this.renderer;
     }
   }
 </script>
@@ -59,7 +60,7 @@
     const Snippets extends SnippetsConstraint<`split`>,
   "
 >
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import ViewContainer from "./utils/ViewContainer.svelte";
 
   let {
@@ -110,6 +111,10 @@
     splitView.layout(clientWidth, clientHeight);
 
     onReady?.({ api: splitView });
+  });
+
+  onDestroy(() => {
+    splitView?.dispose();
   });
 </script>
 

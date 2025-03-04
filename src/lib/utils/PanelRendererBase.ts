@@ -3,6 +3,7 @@ import { type Component, mount, unmount } from "svelte";
 import { PropsUpdater, type PropsPostProcessor } from "./PropsUpdater.svelte.js";
 import type { RecordLike, Mounted } from "./types.js";
 import { MountMechanism, type IdentifierRecipe } from "./MountMechanism.js";
+import { prefix } from "./index.js";
 
 export type PanelRendererBaseConfig<Props extends RecordLike, InitOptions extends RecordLike> = {
   /**
@@ -29,6 +30,8 @@ export type PanelRendererBaseConfig<Props extends RecordLike, InitOptions extend
    * @default true
    */
   propsHasParams?: boolean,
+
+  element?: HTMLElement,
 } & IdentifierRecipe;
 
 export default class PanelRendererBase<Props extends RecordLike, InitOptions extends RecordLike> {
@@ -55,11 +58,12 @@ export default class PanelRendererBase<Props extends RecordLike, InitOptions ext
     this.initOptionsToProps = config.initOptionsToProps;
     this.propsPostProcessor = config.propsPostProcessor;
     this.propsHasParams = config.propsHasParams ?? true;
-    this._element = document.createElement("div");
-    this._element.className = "dv-react-part";
+    this._element = config.element ?? document.createElement("div");
+    this._element.classList.add("dv-react-part");
     this._element.style.height = "100%";
     this._element.style.width = "100%";
-    this._element.id = this.mountID;
+    this._element.setAttribute("data-dockview-svelte", PanelRendererBase.ReadableIdentifier(config));
+    if (!this._element.id) this._element.id = this.mountID;
   }
 
   public init(options: InitOptions): void {
@@ -84,7 +88,7 @@ export default class PanelRendererBase<Props extends RecordLike, InitOptions ext
   }
 
   update({ params }: PanelUpdateEvent): void {
-    // TODO: This is only efficient up to a depth of 1, can start recursing on params if `params[key]` is also an object
+    // TODO: This is only efficient up to a depth of 1, can start recursing on params if `params[key]` is also an object?
     for (const key in params)
       this.propsUpdater?.updateSingle(
         ...((this.propsHasParams
@@ -92,6 +96,9 @@ export default class PanelRendererBase<Props extends RecordLike, InitOptions ext
           : [key, params[key]]) as any),
       );
   }
+
+  private static ReadableIdentifier = ({ panelTarget, viewIndex, id, name }: PanelRendererBaseConfig<any, any>) =>
+    `${panelTarget}-${viewIndex}-${id.startsWith(prefix.component) ? "component" : "snippet"}-${name}`;
 }
 
 export type ConstructorConfigWithout<

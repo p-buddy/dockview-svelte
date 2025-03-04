@@ -352,7 +352,10 @@ export const createExtendedAPI = <
     return { panel, reference };
   }
 
-  (api as DockviewApi).onDidRemovePanel(ReactivePanelUpdater.DettachFromAll);
+  if ("onDidRemovePanel" in api)
+    api.onDidRemovePanel(ReactivePanelUpdater.DettachFromAll);
+  else if ("onDidRemoveView" in api)
+    api.onDidRemoveView(ReactivePanelUpdater.DettachFromAll);
 
   return {
     addComponentPanel,

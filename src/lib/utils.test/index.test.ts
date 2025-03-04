@@ -1,6 +1,6 @@
 import { expectTypeOf } from "vitest";
-import { type ComponentExports, type ComponentProps, } from "./types.js";
-import { type ModifiedProps } from "./index.js";
+import { type ComponentExports, type ComponentProps, } from "../utils/types.js";
+import { type ModifiedProps } from "../utils/index.js";
 import Legacy from "./Legacy.test.svelte";
 import Runes from "./Runes.test.svelte";
 

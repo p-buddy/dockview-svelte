@@ -79,7 +79,7 @@
   const PrefixHeaderActions extends DockviewSpecificComponentConstraint[`prefixHeaderActions`],
 "
 >
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import ViewContainer from "./utils/ViewContainer.svelte";
 
   type DockSpecific = {
@@ -213,6 +213,10 @@
 
   $effect(() => {
     if (onWillDrop) dockView?.onWillDrop(onWillDrop);
+  });
+
+  onDestroy(() => {
+    dockView?.dispose();
   });
 </script>
 

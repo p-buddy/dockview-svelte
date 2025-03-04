@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Legacy from "$lib/utils/Legacy.test.svelte";
+  import Legacy from "$lib/utils.test/Legacy.test.svelte";
   import type { ExpectedDockPanelProps } from "./index.js";
 
   export let params: ExpectedDockPanelProps["params"];

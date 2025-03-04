@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Runes from "$lib/utils/Runes.test.svelte";
+  import Runes from "$lib/utils.test/Runes.test.svelte";
   import type { ExpectedDockPanelProps } from "./index.js";
 
   let props: ExpectedDockPanelProps = $props();

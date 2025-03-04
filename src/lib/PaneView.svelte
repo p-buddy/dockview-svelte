@@ -72,7 +72,7 @@
     const HeaderSnippets extends SnippetsConstraint<`pane`>,
   "
 >
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import ViewContainer from "./utils/ViewContainer.svelte";
 
   type Headers = {
@@ -151,6 +151,10 @@
 
   $effect(() => {
     if (onDidDrop) paneView?.onDidDrop(onDidDrop);
+  });
+
+  onDestroy(() => {
+    paneView?.dispose();
   });
 </script>
 

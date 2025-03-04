@@ -32,6 +32,10 @@ import type { RecordLike, RequiredAndPartial, ComponentExports, ConstrainedCompo
 import PanelRendererBase from "./PanelRendererBase.js";
 import ReactivePanelUpdater from "./reactivity.svelte.js";
 
+export const themes = ["light", "dark", "vs", "replit", "abyss", "dracula"] as const;
+
+export type Theme = typeof themes[number];
+
 /**
  * The props for the React version of the different view components
  */
@@ -236,7 +240,7 @@ type CustomizedViewProps<
   Additional extends AdditionalAddPanelOptions<ViewType> = never
 > = {
   /** 
-   * CAUTION: Snippets with no arguments (like the one below) do unnfortunately satisfy the `components` type costraint, but must be provided within the `snippets` object 
+   * CAUTION: Snippets with no arguments (like the one below) do unfortunately satisfy the `components` type costraint, but must be provided within the `snippets` object 
    * @example
    * ```ts
    * {#snippet snippetWithNoArguments()}
@@ -253,7 +257,9 @@ type CustomizedViewProps<
   onReady?: (
     event: Parameters<OnReady<ViewType>>[0] & { api: ExtendedGridAPI<ViewType, Components, Snippets, Additional> },
   ) => ReturnType<OnReady<ViewType>>;
-};
+  theme?: Theme;
+}
+  & ("orientation" extends keyof RawViewProps<ViewType> ? { orientation: Orientation | "HORIZONTAL" | "VERTICAL" } : {});
 
 type OverridenDockviewReactPropNames = "tabComponents" | "watermarkComponent" | "defaultTabComponent" | "rightHeaderActionsComponent" | "leftHeaderActionsComponent" | "prefixHeaderActionsComponent";
 

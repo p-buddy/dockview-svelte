@@ -1,29 +1,34 @@
 <script lang="ts">
+  import type { Theme } from "./index.js";
+
   type Props = {
-    element?: HTMLElement;
     id: string;
+    element?: HTMLElement;
+    theme?: Theme;
   };
-  let { element = $bindable(), id }: Props = $props();
+  let { element = $bindable(), id, theme }: Props = $props();
 </script>
 
-<div
-  {id}
-  style:height={"100%"}
-  style:width={"100%"}
-  class="outline-none focus:outline-none"
-  bind:this={element}
-></div>
+<span id="{id}-wrapper">
+  <div
+    {id}
+    style:height="100%"
+    style:width="100%"
+    bind:this={element}
+    class={theme ? `dockview-theme-${theme}` : ""}
+  ></div>
+</span>
 
 <style>
   /** Copied from 'dockview/dist/styles/dockview.css' with extra `div` scoping */
-  div :global(.dv-svg) {
+  span :global(.dv-svg) {
     display: inline-block;
     fill: currentcolor;
     line-height: 1;
     stroke: currentcolor;
     stroke-width: 0;
   }
-  div :global(.dockview-theme-dark) {
+  span :global(.dockview-theme-dark) {
     --dv-paneview-active-outline-color: dodgerblue;
     --dv-tabs-and-actions-container-font-size: 13px;
     --dv-tabs-and-actions-container-height: 35px;
@@ -50,7 +55,7 @@
     --dv-paneview-header-border-color: rgba(204, 204, 204, 0.2);
   }
 
-  div :global(.dockview-theme-light) {
+  span :global(.dockview-theme-light) {
     --dv-paneview-active-outline-color: dodgerblue;
     --dv-tabs-and-actions-container-font-size: 13px;
     --dv-tabs-and-actions-container-height: 35px;
@@ -77,7 +82,7 @@
     --dv-paneview-header-border-color: rgb(51, 51, 51);
   }
 
-  div :global(.dockview-theme-vs) {
+  span :global(.dockview-theme-vs) {
     --dv-paneview-active-outline-color: dodgerblue;
     --dv-tabs-and-actions-container-font-size: 13px;
     --dv-tabs-and-actions-container-height: 35px;
@@ -112,7 +117,7 @@
     --dv-inactivegroup-visiblepanel-tab-color: white;
     --dv-inactivegroup-hiddenpanel-tab-color: white;
   }
-  div
+  span
     :global(
       .dockview-theme-vs
         .dv-groupview.dv-active-group
@@ -122,7 +127,7 @@
     border-bottom: 2px solid
       var(--dv-activegroup-visiblepanel-tab-background-color);
   }
-  div
+  span
     :global(
       .dockview-theme-vs
         .dv-groupview.dv-active-group
@@ -132,7 +137,7 @@
     border-top: 2px solid
       var(--dv-activegroup-visiblepanel-tab-background-color);
   }
-  div
+  span
     :global(
       .dockview-theme-vs
         .dv-groupview.dv-active-group
@@ -141,7 +146,7 @@
     ) {
     border-top: 2px solid var(--dv-activegroup-hiddenpanel-tab-background-color);
   }
-  div
+  span
     :global(
       .dockview-theme-vs
         .dv-groupview.dv-inactive-group
@@ -151,7 +156,7 @@
     border-bottom: 2px solid
       var(--dv-inactivegroup-visiblepanel-tab-background-color);
   }
-  div
+  span
     :global(
       .dockview-theme-vs
         .dv-groupview.dv-inactive-group
@@ -161,7 +166,7 @@
     border-top: 2px solid
       var(--dv-inactivegroup-visiblepanel-tab-background-color);
   }
-  div
+  span
     :global(
       .dockview-theme-vs
         .dv-groupview.dv-inactive-group
@@ -172,7 +177,7 @@
       var(--dv-inactivegroup-hiddenpanel-tab-background-color);
   }
 
-  div :global(.dockview-theme-abyss) {
+  span :global(.dockview-theme-abyss) {
     --dv-paneview-active-outline-color: dodgerblue;
     --dv-tabs-and-actions-container-font-size: 13px;
     --dv-tabs-and-actions-container-height: 35px;
@@ -200,7 +205,7 @@
     --dv-paneview-active-outline-color: #596f99;
   }
 
-  div :global(.dockview-theme-dracula) {
+  span :global(.dockview-theme-dracula) {
     --dv-paneview-active-outline-color: dodgerblue;
     --dv-tabs-and-actions-container-font-size: 13px;
     --dv-tabs-and-actions-container-height: 35px;
@@ -227,7 +232,7 @@
     --dv-paneview-header-border-color: #bd93f9;
     --dv-paneview-active-outline-color: #6272a4;
   }
-  div
+  span
     :global(
       .dockview-theme-dracula
         .dv-groupview.dv-active-group
@@ -237,7 +242,7 @@
     ) {
     position: relative;
   }
-  div
+  span
     :global(
       .dockview-theme-dracula
         .dv-groupview.dv-active-group
@@ -254,7 +259,7 @@
     background-color: #94527e;
     z-index: 999;
   }
-  div
+  span
     :global(
       .dockview-theme-dracula
         .dv-groupview.dv-inactive-group
@@ -264,7 +269,7 @@
     ) {
     position: relative;
   }
-  div
+  span
     :global(
       .dockview-theme-dracula
         .dv-groupview.dv-inactive-group
@@ -282,7 +287,7 @@
     z-index: 999;
   }
 
-  div :global(.dockview-theme-replit) {
+  span :global(.dockview-theme-replit) {
     --dv-paneview-active-outline-color: dodgerblue;
     --dv-tabs-and-actions-container-font-size: 13px;
     --dv-tabs-and-actions-container-height: 35px;
@@ -310,21 +315,21 @@
     --dv-separator-handle-background-color: #cfd1d3;
     --dv-separator-handle-hover-background-color: #babbbb;
   }
-  div
+  span
     :global(.dockview-theme-replit .dv-resize-container:has(> .dv-groupview)) {
     border-radius: 8px;
   }
-  div :global(.dockview-theme-replit .dv-groupview) {
+  span :global(.dockview-theme-replit .dv-groupview) {
     overflow: hidden;
     border-radius: 10px;
   }
-  div
+  span
     :global(
       .dockview-theme-replit .dv-groupview .dv-tabs-and-actions-container
     ) {
     border-bottom: 1px solid rgba(128, 128, 128, 0.35);
   }
-  div
+  span
     :global(
       .dockview-theme-replit
         .dv-groupview
@@ -334,7 +339,7 @@
     margin: 4px;
     border-radius: 8px;
   }
-  div
+  span
     :global(
       .dockview-theme-replit
         .dv-groupview
@@ -345,7 +350,7 @@
     height: 8px;
     width: 8px;
   }
-  div
+  span
     :global(
       .dockview-theme-replit
         .dv-groupview
@@ -354,16 +359,16 @@
     ) {
     background-color: #e4e5e6 !important;
   }
-  div :global(.dockview-theme-replit .dv-groupview .dv-content-container) {
+  span :global(.dockview-theme-replit .dv-groupview .dv-content-container) {
     background-color: #fcfcfc;
   }
-  div :global(.dockview-theme-replit .dv-groupview.dv-active-group) {
+  span :global(.dockview-theme-replit .dv-groupview.dv-active-group) {
     border: 1px solid rgba(128, 128, 128, 0.35);
   }
-  div :global(.dockview-theme-replit .dv-groupview.dv-inactive-group) {
+  span :global(.dockview-theme-replit .dv-groupview.dv-inactive-group) {
     border: 1px solid transparent;
   }
-  div
+  span
     :global(
       .dockview-theme-replit
         .dv-vertical
@@ -380,7 +385,7 @@
     background-color: var(--dv-separator-handle-background-color);
     position: absolute;
   }
-  div
+  span
     :global(
       .dockview-theme-replit
         .dv-vertical
@@ -389,7 +394,7 @@
     ) {
     background-color: var(--dv-separator-handle-hover-background-color);
   }
-  div
+  span
     :global(
       .dockview-theme-replit
         .dv-horizontal
@@ -406,7 +411,7 @@
     background-color: var(--dv-separator-handle-background-color);
     position: absolute;
   }
-  div
+  span
     :global(
       .dockview-theme-replit
         .dv-horizontal
@@ -415,10 +420,10 @@
     ) {
     background-color: var(--dv-separator-handle-hover-background-color);
   }
-  div :global(.dv-drop-target) {
+  span :global(.dv-drop-target) {
     position: relative;
   }
-  div :global(.dv-drop-target > .dv-drop-target-dropzone) {
+  span :global(.dv-drop-target > .dv-drop-target-dropzone) {
     position: absolute;
     left: 0px;
     top: 0px;
@@ -427,7 +432,7 @@
     z-index: 1000;
     pointer-events: none;
   }
-  div
+  span
     :global(
       .dv-drop-target > .dv-drop-target-dropzone > .dv-drop-target-selection
     ) {
@@ -445,7 +450,7 @@
     will-change: transform;
     pointer-events: none;
   }
-  div
+  span
     :global(
       .dv-drop-target
         > .dv-drop-target-dropzone
@@ -453,7 +458,7 @@
     ) {
     border-top: 1px solid var(--dv-drag-over-border-color);
   }
-  div
+  span
     :global(
       .dv-drop-target
         > .dv-drop-target-dropzone
@@ -461,7 +466,7 @@
     ) {
     border-bottom: 1px solid var(--dv-drag-over-border-color);
   }
-  div
+  span
     :global(
       .dv-drop-target
         > .dv-drop-target-dropzone
@@ -469,7 +474,7 @@
     ) {
     border-left: 1px solid var(--dv-drag-over-border-color);
   }
-  div
+  span
     :global(
       .dv-drop-target
         > .dv-drop-target-dropzone
@@ -477,11 +482,11 @@
     ) {
     border-right: 1px solid var(--dv-drag-over-border-color);
   }
-  div :global(.dv-dockview) {
+  span :global(.dv-dockview) {
     position: relative;
     background-color: var(--dv-group-view-background-color);
   }
-  div :global(.dv-dockview .dv-watermark-container) {
+  span :global(.dv-dockview .dv-watermark-container) {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -489,11 +494,11 @@
     width: 100%;
     z-index: 1;
   }
-  div :global(.dv-dockview .dv-overlay-render-container) {
+  span :global(.dv-dockview .dv-overlay-render-container) {
     position: relative;
   }
 
-  div
+  span
     :global(
       .dv-groupview.dv-active-group
         > .dv-tabs-and-actions-container
@@ -503,7 +508,7 @@
     background-color: var(--dv-activegroup-visiblepanel-tab-background-color);
     color: var(--dv-activegroup-visiblepanel-tab-color);
   }
-  div
+  span
     :global(
       .dv-groupview.dv-active-group
         > .dv-tabs-and-actions-container
@@ -513,7 +518,7 @@
     background-color: var(--dv-activegroup-hiddenpanel-tab-background-color);
     color: var(--dv-activegroup-hiddenpanel-tab-color);
   }
-  div
+  span
     :global(
       .dv-groupview.dv-inactive-group
         > .dv-tabs-and-actions-container
@@ -523,7 +528,7 @@
     background-color: var(--dv-inactivegroup-visiblepanel-tab-background-color);
     color: var(--dv-inactivegroup-visiblepanel-tab-color);
   }
-  div
+  span
     :global(
       .dv-groupview.dv-inactive-group
         > .dv-tabs-and-actions-container
@@ -538,67 +543,67 @@
  * when a tab is dragged we lose the above stylings because they are conditional on parent elements
  * therefore we also set some stylings for the dragging event
  **/
-  div :global(.dv-tab.dv-tab-dragging) {
+  span :global(.dv-tab.dv-tab-dragging) {
     background-color: var(--dv-activegroup-visiblepanel-tab-background-color);
     color: var(--dv-activegroup-visiblepanel-tab-color);
   }
-  div :global(.dv-groupview) {
+  span :global(.dv-groupview) {
     display: flex;
     flex-direction: column;
     height: 100%;
     background-color: var(--dv-group-view-background-color);
     overflow: hidden;
   }
-  div :global(.dv-groupview:focus) {
+  span :global(.dv-groupview:focus) {
     outline: none;
   }
-  div :global(.dv-groupview > .dv-content-container) {
+  span :global(.dv-groupview > .dv-content-container) {
     flex-grow: 1;
     min-height: 0;
     outline: none;
   }
-  div :global(.dv-root-wrapper) {
+  span :global(.dv-root-wrapper) {
     height: 100%;
     width: 100%;
   }
-  div :global(.dv-grid-view),
-  div :global(.dv-branch-node) {
+  span :global(.dv-grid-view),
+  span :global(.dv-branch-node) {
     height: 100%;
     width: 100%;
   }
-  div :global(.dv-debug .dv-resize-container .dv-resize-handle-top) {
+  span :global(.dv-debug .dv-resize-container .dv-resize-handle-top) {
     background-color: red;
   }
-  div :global(.dv-debug .dv-resize-container .dv-resize-handle-bottom) {
+  span :global(.dv-debug .dv-resize-container .dv-resize-handle-bottom) {
     background-color: green;
   }
-  div :global(.dv-debug .dv-resize-container .dv-resize-handle-left) {
+  span :global(.dv-debug .dv-resize-container .dv-resize-handle-left) {
     background-color: yellow;
   }
-  div :global(.dv-debug .dv-resize-container .dv-resize-handle-right) {
+  span :global(.dv-debug .dv-resize-container .dv-resize-handle-right) {
     background-color: blue;
   }
-  div :global(.dv-debug .dv-resize-container .dv-resize-handle-topleft),
-  div :global(.dv-debug .dv-resize-container .dv-resize-handle-topright),
-  div :global(.dv-debug .dv-resize-container .dv-resize-handle-bottomleft),
-  div :global(.dv-debug .dv-resize-container .dv-resize-handle-bottomright) {
+  span :global(.dv-debug .dv-resize-container .dv-resize-handle-topleft),
+  span :global(.dv-debug .dv-resize-container .dv-resize-handle-topright),
+  span :global(.dv-debug .dv-resize-container .dv-resize-handle-bottomleft),
+  span :global(.dv-debug .dv-resize-container .dv-resize-handle-bottomright) {
     background-color: cyan;
   }
 
-  div :global(.dv-resize-container) {
+  span :global(.dv-resize-container) {
     --dv-overlay-z-index: var(--dv-overlay-z-index, 999);
     position: absolute;
     z-index: calc(var(--dv-overlay-z-index) - 2);
     border: 1px solid var(--dv-tab-divider-color);
     box-shadow: var(--dv-floating-box-shadow);
   }
-  div :global(.dv-resize-container.dv-hidden) {
+  span :global(.dv-resize-container.dv-hidden) {
     display: none;
   }
-  div :global(.dv-resize-container.dv-resize-container-dragging) {
+  span :global(.dv-resize-container.dv-resize-container-dragging) {
     opacity: 0.5;
   }
-  div :global(.dv-resize-container .dv-resize-handle-top) {
+  span :global(.dv-resize-container .dv-resize-handle-top) {
     height: 4px;
     width: calc(100% - 8px);
     left: 4px;
@@ -607,7 +612,7 @@
     position: absolute;
     cursor: ns-resize;
   }
-  div :global(.dv-resize-container .dv-resize-handle-bottom) {
+  span :global(.dv-resize-container .dv-resize-handle-bottom) {
     height: 4px;
     width: calc(100% - 8px);
     left: 4px;
@@ -616,7 +621,7 @@
     position: absolute;
     cursor: ns-resize;
   }
-  div :global(.dv-resize-container .dv-resize-handle-left) {
+  span :global(.dv-resize-container .dv-resize-handle-left) {
     height: calc(100% - 8px);
     width: 4px;
     left: -2px;
@@ -625,7 +630,7 @@
     position: absolute;
     cursor: ew-resize;
   }
-  div :global(.dv-resize-container .dv-resize-handle-right) {
+  span :global(.dv-resize-container .dv-resize-handle-right) {
     height: calc(100% - 8px);
     width: 4px;
     right: -2px;
@@ -634,7 +639,7 @@
     position: absolute;
     cursor: ew-resize;
   }
-  div :global(.dv-resize-container .dv-resize-handle-topleft) {
+  span :global(.dv-resize-container .dv-resize-handle-topleft) {
     height: 4px;
     width: 4px;
     top: -2px;
@@ -643,7 +648,7 @@
     position: absolute;
     cursor: nw-resize;
   }
-  div :global(.dv-resize-container .dv-resize-handle-topright) {
+  span :global(.dv-resize-container .dv-resize-handle-topright) {
     height: 4px;
     width: 4px;
     right: -2px;
@@ -652,7 +657,7 @@
     position: absolute;
     cursor: ne-resize;
   }
-  div :global(.dv-resize-container .dv-resize-handle-bottomleft) {
+  span :global(.dv-resize-container .dv-resize-handle-bottomleft) {
     height: 4px;
     width: 4px;
     left: -2px;
@@ -661,7 +666,7 @@
     position: absolute;
     cursor: sw-resize;
   }
-  div :global(.dv-resize-container .dv-resize-handle-bottomright) {
+  span :global(.dv-resize-container .dv-resize-handle-bottomright) {
     height: 4px;
     width: 4px;
     right: -2px;
@@ -670,51 +675,51 @@
     position: absolute;
     cursor: se-resize;
   }
-  div :global(.dv-render-overlay) {
+  span :global(.dv-render-overlay) {
     --dv-overlay-z-index: var(--dv-overlay-z-index, 999);
     position: absolute;
     z-index: 1;
     height: 100%;
   }
-  div :global(.dv-render-overlay.dv-render-overlay-float) {
+  span :global(.dv-render-overlay.dv-render-overlay-float) {
     z-index: calc(var(--dv-overlay-z-index) - 1);
   }
 
-  div :global(.dv-debug .dv-render-overlay) {
+  span :global(.dv-debug .dv-render-overlay) {
     outline: 1px solid red;
     outline-offset: -1;
   }
-  div :global(.dv-pane-container) {
+  span :global(.dv-pane-container) {
     height: 100%;
     width: 100%;
   }
-  div :global(.dv-pane-container.dv-animated .dv-view) {
+  span :global(.dv-pane-container.dv-animated .dv-view) {
     transition-duration: 0.15s;
     transition-timing-function: ease-out;
   }
-  div :global(.dv-pane-container .dv-view) {
+  span :global(.dv-pane-container .dv-view) {
     overflow: hidden;
     display: flex;
     flex-direction: column;
     padding: 0px !important;
   }
-  div :global(.dv-pane-container .dv-view:not(:first-child)::before) {
+  span :global(.dv-pane-container .dv-view:not(:first-child)::before) {
     background-color: transparent !important;
   }
-  div
+  span
     :global(
       .dv-pane-container .dv-view:not(:first-child) .dv-pane > .dv-pane-header
     ) {
     border-top: 1px solid var(--dv-paneview-header-border-color);
   }
-  div :global(.dv-pane-container .dv-view .dv-default-header) {
+  span :global(.dv-pane-container .dv-view .dv-default-header) {
     background-color: var(--dv-group-view-background-color);
     color: var(--dv-activegroup-visiblepanel-tab-color);
     display: flex;
     padding: 0px 8px;
     cursor: pointer;
   }
-  div
+  span
     :global(
       .dv-pane-container .dv-view .dv-default-header .dv-pane-header-icon
     ) {
@@ -722,30 +727,31 @@
     justify-content: center;
     align-items: center;
   }
-  div :global(.dv-pane-container .dv-view .dv-default-header > span) {
+  span :global(.dv-pane-container .dv-view .dv-default-header > span) {
     padding-left: 8px;
     flex-grow: 1;
   }
-  div :global(.dv-pane-container:first-of-type > .dv-pane > .dv-pane-header) {
+  span :global(.dv-pane-container:first-of-type > .dv-pane > .dv-pane-header) {
     border-top: none !important;
   }
-  div :global(.dv-pane-container .dv-pane) {
+  span :global(.dv-pane-container .dv-pane) {
     display: flex;
     flex-direction: column;
     overflow: hidden;
     height: 100%;
   }
-  div :global(.dv-pane-container .dv-pane .dv-pane-header) {
+  span :global(.dv-pane-container .dv-pane .dv-pane-header) {
     box-sizing: border-box;
     user-select: none;
     position: relative;
     outline: none;
   }
-  div :global(.dv-pane-container .dv-pane .dv-pane-header.dv-pane-draggable) {
+  span :global(.dv-pane-container .dv-pane .dv-pane-header.dv-pane-draggable) {
     cursor: pointer;
   }
-  div :global(.dv-pane-container .dv-pane .dv-pane-header:focus:before),
-  div :global(.dv-pane-container .dv-pane .dv-pane-header:focus-within:before) {
+  span :global(.dv-pane-container .dv-pane .dv-pane-header:focus:before),
+  span
+    :global(.dv-pane-container .dv-pane .dv-pane-header:focus-within:before) {
     position: absolute;
     top: 0;
     left: 0;
@@ -760,15 +766,15 @@
     outline-offset: -1px;
     outline-color: var(--dv-paneview-active-outline-color);
   }
-  div :global(.dv-pane-container .dv-pane .dv-pane-body) {
+  span :global(.dv-pane-container .dv-pane .dv-pane-body) {
     overflow-y: auto;
     overflow-x: hidden;
     flex-grow: 1;
     position: relative;
     outline: none;
   }
-  div :global(.dv-pane-container .dv-pane .dv-pane-body:focus:before),
-  div :global(.dv-pane-container .dv-pane .dv-pane-body:focus-within:before) {
+  span :global(.dv-pane-container .dv-pane .dv-pane-body:focus:before),
+  span :global(.dv-pane-container .dv-pane .dv-pane-body:focus-within:before) {
     position: absolute;
     top: 0;
     left: 0;
@@ -783,38 +789,38 @@
     outline-offset: -1px;
     outline-color: var(--dv-paneview-active-outline-color);
   }
-  div
+  span
     :global(
       .dv-debug .dv-split-view-container .dv-sash-container .dv-sash.dv-enabled
     ) {
     background-color: black;
   }
-  div
+  span
     :global(
       .dv-debug .dv-split-view-container .dv-sash-container .dv-sash.dv-disabled
     ) {
     background-color: orange;
   }
-  div
+  span
     :global(
       .dv-debug .dv-split-view-container .dv-sash-container .dv-sash.dv-maximum
     ) {
     background-color: green;
   }
-  div
+  span
     :global(
       .dv-debug .dv-split-view-container .dv-sash-container .dv-sash.dv-minimum
     ) {
     background-color: red;
   }
 
-  div :global(.dv-split-view-container) {
+  span :global(.dv-split-view-container) {
     position: relative;
     overflow: hidden;
     height: 100%;
     width: 100%;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-splitview-disabled
         > .dv-sash-container
@@ -822,22 +828,22 @@
     ) {
     pointer-events: none;
   }
-  div :global(.dv-split-view-container.dv-animation .dv-view),
-  div :global(.dv-split-view-container.dv-animation .dv-sash) {
+  span :global(.dv-split-view-container.dv-animation .dv-view),
+  span :global(.dv-split-view-container.dv-animation .dv-sash) {
     transition-duration: 0.15s;
     transition-timing-function: ease-out;
   }
-  div :global(.dv-split-view-container.dv-horizontal) {
+  span :global(.dv-split-view-container.dv-horizontal) {
     height: 100%;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-horizontal > .dv-sash-container > .dv-sash
     ) {
     height: 100%;
     width: 4px;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-horizontal
         > .dv-sash-container
@@ -845,7 +851,7 @@
     ) {
     cursor: ew-resize;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-horizontal
         > .dv-sash-container
@@ -853,7 +859,7 @@
     ) {
     cursor: default;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-horizontal
         > .dv-sash-container
@@ -861,7 +867,7 @@
     ) {
     cursor: w-resize;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-horizontal
         > .dv-sash-container
@@ -869,7 +875,7 @@
     ) {
     cursor: e-resize;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-horizontal
         > .dv-view-container
@@ -878,17 +884,17 @@
     height: 100%;
     width: 1px;
   }
-  div :global(.dv-split-view-container.dv-vertical) {
+  span :global(.dv-split-view-container.dv-vertical) {
     width: 100%;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-vertical > .dv-sash-container > .dv-sash
     ) {
     width: 100%;
     height: 4px;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-vertical
         > .dv-sash-container
@@ -896,7 +902,7 @@
     ) {
     cursor: ns-resize;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-vertical
         > .dv-sash-container
@@ -904,7 +910,7 @@
     ) {
     cursor: default;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-vertical
         > .dv-sash-container
@@ -912,7 +918,7 @@
     ) {
     cursor: n-resize;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-vertical
         > .dv-sash-container
@@ -920,13 +926,13 @@
     ) {
     cursor: s-resize;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-vertical > .dv-view-container > .dv-view
     ) {
     width: 100%;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-vertical
         > .dv-view-container
@@ -935,12 +941,12 @@
     height: 1px;
     width: 100%;
   }
-  div :global(.dv-split-view-container .dv-sash-container) {
+  span :global(.dv-split-view-container .dv-sash-container) {
     height: 100%;
     width: 100%;
     position: absolute;
   }
-  div :global(.dv-split-view-container .dv-sash-container .dv-sash) {
+  span :global(.dv-split-view-container .dv-sash-container .dv-sash) {
     position: absolute;
     z-index: 99;
     outline: none;
@@ -950,11 +956,11 @@
     -ms-user-select: none;
     touch-action: none;
   }
-  div
+  span
     :global(
       .dv-split-view-container .dv-sash-container .dv-sash:not(.disabled):active
     ),
-  div
+  span
     :global(
       .dv-split-view-container .dv-sash-container .dv-sash:not(.disabled):hover
     ) {
@@ -964,18 +970,18 @@
     transition-duration: var(--dv-active-sash-transition-duration, 0.1s);
     transition-delay: var(--dv-active-sash-transition-delay, 0.5s);
   }
-  div :global(.dv-split-view-container .dv-view-container) {
+  span :global(.dv-split-view-container .dv-view-container) {
     position: relative;
     height: 100%;
     width: 100%;
   }
-  div :global(.dv-split-view-container .dv-view-container .dv-view) {
+  span :global(.dv-split-view-container .dv-view-container .dv-view) {
     height: 100%;
     box-sizing: border-box;
     overflow: auto;
     position: absolute;
   }
-  div
+  span
     :global(
       .dv-split-view-container.dv-separator-border
         .dv-view:not(:first-child)::before
@@ -988,7 +994,7 @@
     pointer-events: none;
     background-color: var(--dv-separator-border);
   }
-  div :global(.dv-dragged) {
+  span :global(.dv-dragged) {
     transform: translate3d(
       0px,
       0px,
@@ -996,15 +1002,15 @@
     ); /* forces tab to be drawn on a separate layer (see https://github.com/microsoft/vscode/issues/18733) */
   }
 
-  div :global(.dv-tab) {
+  span :global(.dv-tab) {
     flex-shrink: 0;
   }
-  div :global(.dv-tab:focus-within),
-  div :global(.dv-tab:focus) {
+  span :global(.dv-tab:focus-within),
+  span :global(.dv-tab:focus) {
     position: relative;
   }
-  div :global(.dv-tab:focus-within::after),
-  div :global(.dv-tab:focus::after) {
+  span :global(.dv-tab:focus-within::after),
+  span :global(.dv-tab:focus::after) {
     position: absolute;
     content: "";
     height: 100%;
@@ -1016,22 +1022,22 @@
     outline-offset: -1px;
     z-index: 5;
   }
-  div :global(.dv-tab.dv-tab-dragging .dv-default-tab-action) {
+  span :global(.dv-tab.dv-tab-dragging .dv-default-tab-action) {
     background-color: var(--dv-activegroup-visiblepanel-tab-color);
   }
-  div :global(.dv-tab.dv-active-tab .dv-default-tab .dv-default-tab-action) {
+  span :global(.dv-tab.dv-active-tab .dv-default-tab .dv-default-tab-action) {
     visibility: visible;
   }
-  div :global(.dv-tab.dv-inactive-tab .dv-default-tab .dv-default-tab-action) {
+  span :global(.dv-tab.dv-inactive-tab .dv-default-tab .dv-default-tab-action) {
     visibility: hidden;
   }
-  div
+  span
     :global(
       .dv-tab.dv-inactive-tab .dv-default-tab:hover .dv-default-tab-action
     ) {
     visibility: visible;
   }
-  div :global(.dv-tab .dv-default-tab) {
+  span :global(.dv-tab .dv-default-tab) {
     position: relative;
     height: 100%;
     display: flex;
@@ -1041,22 +1047,22 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-  div :global(.dv-tab .dv-default-tab .dv-default-tab-content) {
+  span :global(.dv-tab .dv-default-tab .dv-default-tab-content) {
     padding: 0px 8px;
     flex-grow: 1;
   }
-  div :global(.dv-tab .dv-default-tab .dv-default-tab-action) {
+  span :global(.dv-tab .dv-default-tab .dv-default-tab-action) {
     padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
   }
-  div :global(.dv-tab .dv-default-tab .dv-default-tab-action:hover) {
+  span :global(.dv-tab .dv-default-tab .dv-default-tab-action:hover) {
     border-radius: 2px;
     background-color: var(--dv-icon-hover-background-color);
   }
-  div :global(.dv-tabs-and-actions-container) {
+  span :global(.dv-tabs-and-actions-container) {
     display: flex;
     background-color: var(--dv-tabs-and-actions-container-background-color);
     flex-shrink: 0;
@@ -1064,14 +1070,14 @@
     height: var(--dv-tabs-and-actions-container-height);
     font-size: var(--dv-tabs-and-actions-container-font-size);
   }
-  div
+  span
     :global(
       .dv-tabs-and-actions-container.dv-single-tab.dv-full-width-single-tab
         .dv-tabs-container
     ) {
     flex-grow: 1;
   }
-  div
+  span
     :global(
       .dv-tabs-and-actions-container.dv-single-tab.dv-full-width-single-tab
         .dv-tabs-container
@@ -1079,19 +1085,19 @@
     ) {
     flex-grow: 1;
   }
-  div
+  span
     :global(
       .dv-tabs-and-actions-container.dv-single-tab.dv-full-width-single-tab
         .dv-void-container
     ) {
     flex-grow: 0;
   }
-  div :global(.dv-tabs-and-actions-container .dv-void-container) {
+  span :global(.dv-tabs-and-actions-container .dv-void-container) {
     display: flex;
     flex-grow: 1;
     cursor: grab;
   }
-  div :global(.dv-tabs-and-actions-container .dv-tabs-container) {
+  span :global(.dv-tabs-and-actions-container .dv-tabs-container) {
     display: flex;
     overflow-x: overlay;
     overflow-y: hidden;
@@ -1099,25 +1105,25 @@
     /* Track */
     /* Handle */
   }
-  div
+  span
     :global(
       .dv-tabs-and-actions-container .dv-tabs-container::-webkit-scrollbar
     ) {
     height: 3px;
   }
-  div
+  span
     :global(
       .dv-tabs-and-actions-container .dv-tabs-container::-webkit-scrollbar-track
     ) {
     background: transparent;
   }
-  div
+  span
     :global(
       .dv-tabs-and-actions-container .dv-tabs-container::-webkit-scrollbar-thumb
     ) {
     background: var(--dv-tabs-container-scrollbar-color);
   }
-  div :global(.dv-tabs-and-actions-container .dv-tabs-container .dv-tab) {
+  span :global(.dv-tabs-and-actions-container .dv-tabs-container .dv-tab) {
     -webkit-user-drag: element;
     outline: none;
     min-width: 75px;
@@ -1125,7 +1131,7 @@
     position: relative;
     box-sizing: border-box;
   }
-  div
+  span
     :global(
       .dv-tabs-and-actions-container
         .dv-tabs-container
@@ -1141,7 +1147,7 @@
     width: 1px;
     height: 100%;
   }
-  div :global(.dv-watermark) {
+  span :global(.dv-watermark) {
     display: flex;
     height: 100%;
   }

@@ -13,14 +13,15 @@ import type {
   PanePanelHeaderConstraint,
   ExtractComponentsFromRenderables,
   ExtractSnippetsFromRenderables,
-  AddedPanelByView
+  AddedPanelByView,
+  Theme
 } from "./utils/index.js";
-import { signal } from "./utils/index.js";
+import { signal, themes } from "./utils/index.js";
 import { Orientation } from "dockview-core";
 
-export { DockView, PaneView, SplitView, GridView, Orientation, signal };
+export { DockView, PaneView, SplitView, GridView, Orientation, signal, themes };
 
-export type { AddedPanelByView, ViewKey };
+export type { AddedPanelByView, ViewKey, Theme };
 
 export type PanelProps<T extends ViewKey, Options extends Record<string, any>> = {
   grid: IGridviewPanelProps<Options>;

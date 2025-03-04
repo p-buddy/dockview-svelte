@@ -67,6 +67,7 @@
     components,
     snippets,
     onReady,
+    theme,
     ...props
   }: ModifiedProps<"split", Components, Snippets> = $props();
 
@@ -120,4 +121,4 @@
   });
 </script>
 
-<ViewContainer id={`split${index}`} bind:element />
+<ViewContainer id={`split${index}`} bind:element {theme} />

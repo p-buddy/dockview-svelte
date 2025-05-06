@@ -2,6 +2,7 @@ import DockView from "./DockView.svelte";
 import PaneView from "./PaneView.svelte";
 import SplitView from "./SplitView.svelte";
 import GridView from "./GridView.svelte";
+import DefaultDockTab, { type Props as DefaultDockTabProps } from "./dock/DefaultDockTab.svelte";
 import type { IDockviewHeaderActionsProps, IDockviewPanelHeaderProps, IDockviewPanelProps, IWatermarkPanelProps, } from "dockview-core";
 import type { IPaneviewPanelProps, ISplitviewPanelProps, IGridviewPanelProps } from "dockview";
 import type {
@@ -19,9 +20,9 @@ import type {
 import { signal, themes } from "./utils/index.js";
 import { Orientation } from "dockview-core";
 
-export { DockView, PaneView, SplitView, GridView, Orientation, signal, themes };
+export { DockView, PaneView, SplitView, GridView, Orientation, signal, themes, DefaultDockTab };
 
-export type { AddedPanelByView, ViewKey, Theme };
+export type { AddedPanelByView, ViewKey, Theme, DefaultDockTabProps };
 
 export type PanelProps<T extends ViewKey, Options extends Record<string, any>> = {
   grid: IGridviewPanelProps<Options>;

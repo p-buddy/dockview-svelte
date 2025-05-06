@@ -11,7 +11,9 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:e2e": "playwright test",
 		"test": "npm run test:e2e && npm run test:unit -- --run",
-		"test:unit": "vitest"
+		"test:unit": "vitest",
+		"prepublishOnly": "pnpm build && npm version patch --git-tag-version false",
+		"postpublish": "git add ./package.json && git commit -m \"bump version: $(basename $(pwd))\" && git push"
 	},
 	"files": [
 		"dist",

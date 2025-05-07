@@ -1,7 +1,16 @@
 <script lang="ts" module>
-  import type { IDockviewDefaultTabProps } from "dockview";
-  import type { DockviewIDisposable, DockviewPanelApi } from "dockview-core";
+  import type { HTMLAttributes } from "svelte/elements";
   import { onDestroy, type Snippet } from "svelte";
+  import type {
+    IDockviewPanelHeaderProps,
+    DockviewIDisposable,
+    DockviewPanelApi,
+  } from "dockview-core";
+  /**
+   * Unused but included to easily navigate to (since these are the appropriate Prop types for this component,
+   * but the type becomes `any`, likely because it relies on `React.DOMAttributes<...>`)
+   */
+  import type { IDockviewDefaultTabProps } from "dockview";
 
   class ReactiveTitle implements DockviewIDisposable {
     title = $state("");
@@ -18,11 +27,17 @@
     }
   }
 
-  export type Props = IDockviewDefaultTabProps & {
+  /** Should be implemented the same as `IDockviewDefaultTabProps` */
+  type DockviewDefaultTabProps = IDockviewPanelHeaderProps & {
     hideClose?: boolean;
     closeActionOverride?: () => void;
+  } & HTMLAttributes<HTMLDivElement>;
+
+  type CustomProps = {
     content?: Snippet<[title: string]>;
   };
+
+  export type Props = DockviewDefaultTabProps & CustomProps;
 </script>
 
 <script lang="ts">
